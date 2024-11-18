@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Mode Dashboard</title>
+</head>
+<body>
+    <h1>Beta Mode Dashboard</h1>
+
+    <h2>Beta Tools</h2>
+    <button onclick="runSandbox()">Run Sandbox Mode</button><br><br>
+    <button onclick="runLivePreview()">Run Live Preview</button><br><br>
+    <button onclick="viewFeedback()">View Feedback</button>
+
+    <h2>User Feedback</h2>
+    <ul id="feedbackList"></ul>
+
+    <script>
+        function runSandbox() {
+            fetch('/api/run_sandbox', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error("Error:", error));
+        }
+
+        function runLivePreview() {
+            fetch('/api/run_live_preview', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error("Error:", error));
+        }
+
+        function viewFeedback() {
+            fetch('/api/view_feedback')
+                .then(response => response.json())
+                .then(data => {
+                    const feedbackList = document.getElementById("feedbackList");
+                    feedbackList.innerHTML = "";
+                    data.feedback.forEach(feedback => {
+                        const li = document.createElement("li");
+                        li.textContent = feedback;
+                        feedbackList.appendChild(li);
+                    });
+                })
+                .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>

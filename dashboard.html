@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dashboard</title>
+</head>
+<body>
+    <h1>VIP Mode Dashboard</h1>
+    <h2>System Health</h2>
+    <p>Status: Healthy</p>
+
+    <h2>Repair Logs</h2>
+    <ul>
+        {% for log in logs %}
+        <li>{{ log }}</li>
+        {% else %}
+        <p>No logs available.</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Quick Actions</h2>
+    <button onclick="runRepair()">Run Repair</button>
+
+    <script>
+        function runRepair() {
+            fetch('/api/run_repair', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => alert(data.message))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

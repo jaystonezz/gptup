@@ -1,0 +1,20 @@
+
+{
+    "name": "ChatGPT Assistant Workspace",
+    "image": "mcr.microsoft.com/devcontainers/python:3.9",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "postCreateCommand": "./start_workspace.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    },
+    "mounts": [
+        "source=/mnt/data,target=/workspace,type=bind,consistency=cached"
+    ]
+}

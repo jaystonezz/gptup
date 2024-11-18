@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Mode Dashboard</title>
+</head>
+<body>
+    <h1>VIP Mode Dashboard</h1>
+
+    <h2>Task Queue</h2>
+    <ul id="taskList"></ul>
+
+    <button onclick="addTask()">Add New Task</button>
+
+    <script>
+        function fetchTasks() {
+            fetch('/api/task_status')
+                .then(response => response.json())
+                .then(data => {
+                    const taskList = document.getElementById('taskList');
+                    taskList.innerHTML = '';
+                    for (const [task, status] of Object.entries(data)) {
+                        const li = document.createElement('li');
+                        li.textContent = `${task}: ${status}`;
+                        taskList.appendChild(li);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function addTask() {
+            fetch('/api/add_task', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    fetchTasks();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Refresh task list every 5 seconds
+        setInterval(fetchTasks, 5000);
+        fetchTasks();
+    </script>
+</body>
+</html>

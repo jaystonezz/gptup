@@ -1,0 +1,9 @@
+{
+    "feature_toggles": {
+        "live_preview": true,
+        "sandbox_mode": true,
+        "performance_metrics": false,
+        "feedback_collection": true
+    },
+    "description": "Toggle experimental features for Beta Mode."
+}

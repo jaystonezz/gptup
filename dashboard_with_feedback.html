@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Mode Dashboard</title>
+</head>
+<body>
+    <h1>Beta Mode Dashboard</h1>
+
+    <h2>Submit Feedback</h2>
+    <textarea id="feedbackInput" placeholder="Enter your feedback here..." rows="4" cols="50"></textarea><br>
+    <button onclick="submitFeedback()">Submit Feedback</button>
+
+    <script>
+        function submitFeedback() {
+            const feedback = document.getElementById("feedbackInput").value;
+            if (!feedback) {
+                alert("Please enter your feedback before submitting.");
+                return;
+            }
+            fetch('/api/submit_feedback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ feedback: feedback })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                document.getElementById("feedbackInput").value = "";
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
